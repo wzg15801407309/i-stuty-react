@@ -1,3 +1,8 @@
+/**
+ * 创建react的方式  使用create-react-app 创建 
+ * 解释：creat-react-app相当于vue-cli创建项目一样
+ *      creat-react-app是官方的脚手架
+ */
 import logo from './logo.svg';
 import './App.css';
 
