@@ -4,6 +4,7 @@
 
 > 是使用 creat-react-app 创建的项目
 > 是去第一次创建关于 react 的项目，是一个没有任何改动的简单的项目
+> 推荐 npx creat-react-app 项目名
 
 ## webpack-react
 
