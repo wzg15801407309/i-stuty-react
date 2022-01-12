@@ -1,64 +1,63 @@
-// // 导入react
-// import React from 'react';
-// import ReactDOM from 'react-dom';
 
-// import './index.css';
-// import App from './App';
-// import reportWebVitals from './reportWebVitals';
-
-// ReactDOM.render(
-//   <React.StrictMode>
-//     <App />
-//   </React.StrictMode>,
-//   document.getElementById('root')
-// );
-
-// // If you want to start measuring performance in your app, pass a function
-// // to log results (for example: reportWebVitals(console.log))
-// // or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-// reportWebVitals();
-
-// // 导入react
-// import React from 'react';
-// import ReactDOM from 'react-dom';
-
-// const title = <h1>hello JSX</h1>
-
-// ReactDOM.render(title,document.getElementById("root"));
-
+/**
+ * 事件绑定中this为undwfine
+ * 1:利用箭头函数
+ * 2:Function.prototype.bind()
+ * 3:class实例方法
+ * 应用场景：在组件类抽离js的逻辑代码就会有thisundefine的问题
+ */
 
 
 // 导入react
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-/*
- * 函数组件
-* 函数名必须大写
-*/ 
-// function Hello (){
-//   return(
-//     <div>hello 函数组件</div>
-//   )
-// }
-// ReactDOM.render(<Hello />,document.getElementById("root"));
-/**
- * 类组件
- */
-// class Hello extends React.Component{
-//   render(){
-//     return(
-//       <div>我的第一个react类组件</div>
-//     )
-//   }
-// }
-// ReactDOM.render(<Hello />,document.getElementById("root"));
-/**
- * 组件抽离为独立的文件
- */
+class App extends React.Component{
+  // // 问题2
+  // constructor(){
+  //   super();
+  //   this.countAdd = this.countAdd.bind(this);
+  // }
 
-// import Hello from './newcomponent.js';
-// ReactDOM.render(<Hello />,document.getElementById("root"));
-// 事件绑定
-import APPButton from './enevt.js';
-ReactDOM.render(<APPButton />,document.getElementById("root"));
+  state={
+    count:0
+  }
+
+  // countAdd(){
+  //   this.setState({
+  //     count:this.state.count+1
+  //   })
+  // }
+  countAdd = ()=>{
+      this.setState({
+      count:this.state.count+1
+    })
+  }
+  render(){
+    return(
+      <div>
+        <span>计数器:{this.state.count}</span>
+        
+        {/* <button onClick={()=>{
+          this.setState({
+            count:this.state.count+1
+          })
+        }}>+</button> */}
+
+        {/* 这样写this.countAdd this会报undefine */}
+        {/* <button onClick={this.countAdd}>+</button> */}
+
+        {/* 解决问题1:箭头函数解决问题 */}
+        {/* <button onClick={()=>{this.countAdd();}}>+</button> */}
+        {/* 解决问题2:Function.prototype.bind() */}
+        {/* 在constructor 中设置 */}
+        {/* <button onClick={this.countAdd}>+</button> */}
+        {/* 解决问题3:class实例方法 */}
+        <button onClick={this.countAdd}>+</button>
+
+      </div>
+    )
+  }
+}
+
+ReactDOM.render(<App />,document.getElementById("root"));

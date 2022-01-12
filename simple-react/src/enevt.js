@@ -15,12 +15,27 @@ import React from 'react'
 // }
 
 // export default APPButton;
-function APPButton(){
-  function  handleClick (){
-    console.log('单击事件触发');
+
+// 事件函数
+// function APPButton(){
+//   function  handleClick (){
+//     console.log('单击事件触发');
+//   }
+//   return (
+//     <button onClick={handleClick}>button</button>
+//   )
+// }
+// export default APPButton;
+
+// 事件对象
+function APPButton() {
+  function  handleClick (e){
+    // 阻止默认的事件跳转
+    e.preventDefault();
+    console.log('事件对象',e);
   }
-  return (
-    <button onClick={handleClick}>button</button>
+  return(
+    <a href='https://www.baidu.com/' onClick={handleClick}>a事件点击</a>
   )
 }
 export default APPButton;
