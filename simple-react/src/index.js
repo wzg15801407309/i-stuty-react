@@ -79,3 +79,78 @@ class APPC1 extends React.Component {
 }
 
 ReactDOM.render(<APPF1/>,document.getElementById('root1'));
+//兄弟组件的值的传递，是建立一个公共的父组件+props来共享(状态提升)
+class Counter extends React.Component {
+  state = {
+    count:0
+  }
+  onIncrement = ()=>{
+    this.setState({
+      count:this.state.count+1
+    })
+  }
+  render(){
+    return (
+      <div className='mychild'>
+       <Children1  count={this.state.count}/>
+       <Children2  onIncrement={this.onIncrement}/>
+      </div>
+    )
+  }
+}
+class Children1 extends React.Component {
+  render(){
+    return (
+      <div>计数器:{this.props.count}</div>
+    )
+  }
+}
+class Children2 extends React.Component {
+  handlClick = ()=>{
+    this.props.onIncrement();
+  }
+  render(){
+    return (
+      <div>
+        <button onClick={this.handlClick} >+1</button>
+      </div>
+    )
+  }
+}
+ReactDOM.render(<Counter/>,document.getElementById('root2'));
+// 多嵌套组件件数据的传值（跨组件）Context
+// 创建context得到下面的组件
+const { Provider, Consumer } = React.createContext();
+
+class APP extends React.Component {
+  render(){
+    return (
+      <Provider value='pink'>
+        <div className='pink'>
+          <Children3/>
+        </div>
+      </Provider>
+ 
+    )
+  }
+}
+class Children3 extends React.Component {
+  render(){
+    return (
+      <Children4 />
+    )
+  }
+}
+class Children4 extends React.Component {
+  render(){
+    return (
+      <div>
+       <Consumer>
+         {data =><span>我是子节点--{data}</span>}
+       </Consumer>
+      </div>
+    )
+  }
+}
+
+ReactDOM.render(<APP/>,document.getElementById('root3'));
