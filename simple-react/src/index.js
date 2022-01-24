@@ -28,101 +28,22 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './App2.css';
 class APP extends React.Component{
-  state = {
-    color:"#369"
-  }
-  getColor(){
-    return Math.floor(Math.random()*256);
-  }
-  changBG = ()=>{
-    this.setState(()=>{
-      return {
-        color: `rgb(${this.getColor()},${this.getColor()},${this.getColor()})`
-      }
-    })
-  }
-  render(){
-    console.log('根组件');
-    return (
-      <div className='grandfather' style={{ backgroundColor: this.state.color}}>
-        <button onClick={this.changBG} >根组件 - 更新样式状态及</button>
-        <div className='father'>
-          <Father1 />
-          <Father2 />
-        </div>
-      </div>
-    )
-  }
-}
-class Father1 extends React.Component{
-  state = {
+  state={
     count:0
   }
-  handleClick = ()=>{
-    this.setState(state=>{return {count:this.state.count+1}})
+  countAdd = ()=>{
+      this.setState(()=>{
+        return {
+          count:this.state.count+1
+        }
+      })
   }
   render(){
-    console.log('左侧父组件');
-    return (
-      <div className='father-box'>
-        <h2>左侧 - Father1  <button  onClick={this.handleClick} >点我:{this.state.count}</button> </h2>
-        <div className='children-box'>
-          <Children1 />
-          <Children2 />
-        </div>
+    return(
+      <div>
+        <h1>计数器:{this.state.count}</h1>
+        <button onClick={this.countAdd}>+</button>
       </div>
-    )
-  }
-}
-class Father2 extends React.Component{
-  state = {
-    count:0
-  }
-  handleClick = ()=>{
-    this.setState(state=>{return {count:this.state.count+1}})
-  }
-  render(){
-    console.log('右侧父组件');
-    return (
-      <div className='father-box'>
-        <h2>右侧 - Father2  <button  onClick={this.handleClick} >点我:{this.state.count}</button> </h2>
-        <div className='children-box'>
-          <Children3 />
-          <Children4 />
-        </div>
-      </div>
-    )
-  }
-}
-class Children1 extends React.Component{
-  render(){
-    console.log("左侧子组件 - 1");
-    return (
-      <div className='child'>左子组件1-1</div>
-    )
-  }
-}
-class Children2 extends React.Component{
-  render(){
-    console.log("左侧子组件 - 2");
-    return (
-      <div className='child'>左子组件1-2</div>
-    )
-  }
-}
-class Children3 extends React.Component{
-  render(){
-    console.log("右侧子组件 - 1");
-    return (
-      <div className='child'>右子组件1-1</div>
-    )
-  }
-}
-class Children4 extends React.Component{
-  render(){
-    console.log("右侧子组件 - 2");
-    return (
-      <div className='child'>右子组件1-2</div>
     )
   }
 }
