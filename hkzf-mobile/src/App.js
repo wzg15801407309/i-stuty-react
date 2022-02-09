@@ -1,8 +1,11 @@
 
+
+import { Button } from 'antd-mobile'
+
 function App() {
   return (
     <div className="App">
-      项目根组件
+      <Button color='success'>Button </Button>
     </div>
   );
 }
