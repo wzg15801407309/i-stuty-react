@@ -1,11 +1,10 @@
 
-
-import { Button } from 'antd-mobile'
+import BasicRoute from './router';
 
 function App() {
   return (
     <div className="App">
-      <Button color='success'>Button </Button>
+      <BasicRoute />
     </div>
   );
 }
