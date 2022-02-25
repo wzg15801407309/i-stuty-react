@@ -7,3 +7,6 @@
   position: fixed;
   bottom: 0;
 }
+.mainlayout .adm-tab-bar-item-active {
+  color: #21b97a;
+}

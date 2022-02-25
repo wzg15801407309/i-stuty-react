@@ -11,7 +11,6 @@ const MainTabBar = ()=>{
   const setRouteActive = value =>{
     history(value);
   }
-  console.log('pathname',pathname);
 
   // TabBar 数据
   const tabList = [
