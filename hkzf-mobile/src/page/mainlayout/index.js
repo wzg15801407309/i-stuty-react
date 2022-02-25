@@ -2,36 +2,47 @@ import React from 'react';
 import './index.css';
 
 import { TabBar } from 'antd-mobile';
+import { Outlet,useLocation, useNavigate} from 'react-router-dom'
 const MainTabBar = ()=>{
+  const history = useNavigate();
+  const location = useLocation();
+  const { pathname } = location;
+
+  const setRouteActive = value =>{
+    history(value);
+  }
+  console.log('pathname',pathname);
+
   // TabBar 数据
   const tabList = [
     {
-      key:"index",
+      key:"/",
       title: '首页',
       icon: 'icon-ind',
       path: '/Mainlayout'
     },
     {
-      key:"findhouse",
+      key:"/findhouse",
       title: '找房',
       icon: 'icon-findHouse',
       path: '/Mainlayout/list'
     },
     {
-      key:'news',
+      key:'/news',
       title: '资讯',
       icon: 'icon-infom',
       path: '/Mainlayout/news'
     },
     {
-      key:'profile',
+      key:'/profile',
       title: '我的',
       icon: 'icon-my',
       path: '/Mainlayout/profile'
     }
   ];
+
   return (
-    <TabBar>
+    <TabBar activeKey={ pathname } onChange={value=>setRouteActive(value)}>
       {tabList.map(item => (
         <TabBar.Item key={item.key} icon={<i className={`iconfont ${item.icon}`} /> } title={item.title} />
       ))}
@@ -41,7 +52,7 @@ const MainTabBar = ()=>{
 const Mainlayout= ()=>{
   return (
     <div className="mainlayout">
-      <div>body</div>
+      <Outlet />
       <MainTabBar />
     </div>
   )

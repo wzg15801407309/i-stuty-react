@@ -7,4 +7,11 @@ import App from './App.js'
 import './assets/fonts/iconfont.css'
 import './index.css';
 
-ReactDOM.render(<React.StrictMode> <App /></React.StrictMode>,document.getElementById('root'));
+import  { BrowserRouter } from "react-router-dom";
+
+ReactDOM.render(
+  <React.StrictMode> 
+    <BrowserRouter> <App /></BrowserRouter>
+    </React.StrictMode>,
+  document.getElementById('root')
+);

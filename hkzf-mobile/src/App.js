@@ -1,9 +1,13 @@
 import React from 'react';
-import BasicRoute from './router';
-export default class App extends React.Component{
-  render(){
-    return (
-      <div className="App"><BasicRoute /></div>
-    );
-  }
+import routerArray from './router';
+import  { useRoutes } from "react-router-dom";
+import { Suspense } from 'react/cjs/react.production.min';
+/**使用hook，使用函数组件 */
+function App(){
+  return(
+      <Suspense fallback={<>loading</>}> 
+        { useRoutes(routerArray) }
+      </Suspense>
+  )
 }
+export default App 
