@@ -2,3 +2,19 @@
   height: 120px;
   width: 100%;
 }
+.home .nav {
+  padding: 10px 0;
+}
+.home .nav h2 {
+  margin-top: 7px;
+  font-size: 13px;
+  font-weight: normal;
+}
+
+.nav-item-block {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  color: #999999;
+}

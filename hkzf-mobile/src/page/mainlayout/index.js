@@ -21,7 +21,7 @@ const MainTabBar = ()=>{
       path: '/Mainlayout'
     },
     {
-      key:"/findhouse",
+      key:"/list",
       title: '找房',
       icon: 'icon-findHouse',
       path: '/Mainlayout/list'

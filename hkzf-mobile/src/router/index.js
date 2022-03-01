@@ -13,7 +13,7 @@ const routerArray = [
         element:< Mainlayout />,
         children:[
             { index:true,element:< Index /> },
-            { path:'findhouse',element:< HouseList /> },
+            { path:'list',element:< HouseList /> },
             { path:'news',element:< News /> },
             { path:'profile',element:< Profile /> },
         ]
