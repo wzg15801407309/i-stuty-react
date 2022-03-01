@@ -32,15 +32,9 @@ axios.interceptors.response.use(
  */
  export function get(url, params = {}) {
   return new Promise((resolve, reject) => {
-    axios.get(url, {
-        params: params,
-      }).then((response) => {
-        landing(url, params, response.data);
+    axios.get(url, {params: params,}).then((response) => {
         resolve(response.data);
-      })
-      .catch((error) => {
-        reject(error);
-      });
+      }).catch((error) => {reject(error);});
   });
 };
 /**
@@ -82,7 +76,7 @@ axios.interceptors.response.use(
   });
 };
 /**统一接口处理 */
-export default function fecth (fecth, url, param) {
+export default function http (fecth, url, param) {
   let _data = "";
   return new Promise((resolve, reject) => {
     switch (fecth) {
@@ -162,13 +156,3 @@ function msag(err) {
     }
   }
 };
-/**
- * 查看返回的数据
- * @param url
- * @param params
- * @param data
- */
- function landing(url, params, data) {
-  if (data.code === -1) {
-  }
-}
