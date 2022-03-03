@@ -1,5 +1,5 @@
 import React from 'react';
-import './index.css';
+import  './index.less';
 
 import { TabBar } from 'antd-mobile';
 import { Outlet,useLocation, useNavigate} from 'react-router-dom'
