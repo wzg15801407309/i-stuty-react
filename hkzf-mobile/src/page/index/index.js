@@ -1,7 +1,7 @@
 import React, {useEffect,useState}from 'react';
 import { Swiper, Image,Grid } from 'antd-mobile';
 import { Link } from "react-router-dom";
-import './index.css';
+import './index.less';
 import { getSwiperList } from '../../https/homehttp.js';
 
 // 导入导航菜单图片
