@@ -2,7 +2,7 @@ import React, {useEffect,useState}from 'react';
 import { Swiper, Image,Grid } from 'antd-mobile';
 import { Link } from "react-router-dom";
 import './index.less';
-import { getSwiperList } from '../../https/homehttp.js';
+import { getSwiperList,getHouseList } from '../../https/homehttp.js';
 
 // 导入导航菜单图片
 import Nav1 from '../../assets/images/nav-1.png'
@@ -29,25 +29,47 @@ const navsItem = navs.map((item)=>(
 
 const Index= ()=>{
   const [swiperList, setSwiperList] = useState([]);
+  const [groupList, setGroupList] = useState([]);
   useEffect(()=>{
     getSwiperList().then(res=>{
       setSwiperList(res.body);
+    });
+    getHouseList().then(res=>{
+      setGroupList(res.body);
     });
   },[]);
   return (
     <div className="home">
       {/* 轮播图 */}
-      <Swiper autoplay={true} loop={true}>
-        {
-          swiperList.map((item)=>(
-            <Swiper.Item key={item.id}>
-             <Image height={212} src={`http://localhost:8080${item.imgSrc}`} fit='fill' />
-            </Swiper.Item>
-          ))
-        }
+      <Swiper autoplay={true} loop={true}>{
+        swiperList.map((item)=>(
+          <Swiper.Item key={item.id}>
+           <Image height={212} src={`http://localhost:8080${item.imgSrc}`} fit='fill' />
+          </Swiper.Item>
+        ))
+      }
       </Swiper>
       {/* 导航菜单 */}
       <Grid columns={4} className='nav'>{navsItem}</Grid>
+      {/* 租房小组 */}
+      <div className='groups'>
+         <h3 className="groups-caption">
+            租房小组 <span className="more">更多</span>
+          </h3>
+          <Grid columns={2} gap={10} className='groups-item'>{
+            groupList.map(item=>(
+              <div className='item' key={item.id}>
+                <div className='item-left'>
+                  <span>{item.title}</span>
+                  <span className='left-desc'>{item.desc}</span>
+                </div>
+                <div className='item-right'>
+                  <Image  height={43} width={43} src={`http://localhost:8080${item.imgSrc}`} fit='fill' />
+                </div>
+              </div>
+            ))
+          }</Grid>
+      </div>
     </div>
   )
 }
