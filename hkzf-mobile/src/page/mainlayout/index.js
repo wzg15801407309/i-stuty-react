@@ -41,11 +41,14 @@ const MainTabBar = ()=>{
   ];
 
   return (
-    <TabBar activeKey={ pathname } onChange={value=>setRouteActive(value)}>
-      {tabList.map(item => (
-        <TabBar.Item key={item.key} icon={<i className={`iconfont ${item.icon}`} /> } title={item.title} />
-      ))}
-    </TabBar>
+    <div className='tab'>
+      <TabBar safeArea={true} activeKey={ pathname } onChange={value=>setRouteActive(value)}>
+        {tabList.map(item => (
+          <TabBar.Item key={item.key} icon={<i className={`iconfont ${item.icon}`} /> } title={item.title} />
+        ))}
+      </TabBar>
+    </div>
+
   )
 }
 const Mainlayout= ()=>{

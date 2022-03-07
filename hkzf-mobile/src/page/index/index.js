@@ -1,8 +1,8 @@
 import React, {useEffect,useState}from 'react';
-import { Swiper, Image,Grid } from 'antd-mobile';
+import { Swiper, Image,Grid,List} from 'antd-mobile';
 import { Link } from "react-router-dom";
 import './index.less';
-import { getSwiperList,getHouseList } from '../../https/homehttp.js';
+import { getSwiperList,getHouseList,getNewsList } from '../../https/homehttp.js';
 
 // 导入导航菜单图片
 import Nav1 from '../../assets/images/nav-1.png'
@@ -30,12 +30,16 @@ const navsItem = navs.map((item)=>(
 const Index= ()=>{
   const [swiperList, setSwiperList] = useState([]);
   const [groupList, setGroupList] = useState([]);
+  const [newsList, setNewsList] = useState([]);
   useEffect(()=>{
     getSwiperList().then(res=>{
       setSwiperList(res.body);
     });
     getHouseList().then(res=>{
       setGroupList(res.body);
+    });
+    getNewsList().then(res=>{
+      setNewsList(res.body);
     });
   },[]);
   return (
@@ -53,7 +57,7 @@ const Index= ()=>{
       <Grid columns={4} className='nav'>{navsItem}</Grid>
       {/* 租房小组 */}
       <div className='groups'>
-         <h3 className="groups-caption">
+          <h3 className="groups-caption">
             租房小组 <span className="more">更多</span>
           </h3>
           <Grid columns={2} gap={10} className='groups-item'>{
@@ -69,6 +73,28 @@ const Index= ()=>{
               </div>
             ))
           }</Grid>
+      </div>
+      {/* 最新资讯 */}
+      <div className='news'>
+        <h3 className="news-caption">
+          最新资讯
+        </h3>
+        <List>{
+          newsList.map(item =>(
+            <List.Item key={item.id}>
+               <div className='news-left'>
+                <Image  height={90} width={110} src={`http://localhost:8080${item.imgSrc}`} fit={'fill'} /> 
+               </div>
+               <div className='news-right'>
+                 <div className='right-up'>{item.title}</div>
+                 <div className='right-down'>
+                   <span>{item.from}</span>
+                   <span>{item.date}</span>
+                 </div>
+               </div>
+            </List.Item>
+          ))
+        }</List>
       </div>
     </div>
   )
