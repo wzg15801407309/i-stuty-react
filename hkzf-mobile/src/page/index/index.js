@@ -1,6 +1,6 @@
 import React, {useEffect,useState}from 'react';
 import { Swiper, Image,Grid,List} from 'antd-mobile';
-import { Link } from "react-router-dom";
+import { Link,useNavigate } from "react-router-dom";
 import './index.less';
 import { getSwiperList,getHouseList,getNewsList } from '../../https/homehttp.js';
 
@@ -28,6 +28,7 @@ const navsItem = navs.map((item)=>(
 ))
 
 const Index= ()=>{
+  
   const [swiperList, setSwiperList] = useState([]);
   const [groupList, setGroupList] = useState([]);
   const [newsList, setNewsList] = useState([]);
@@ -42,17 +43,39 @@ const Index= ()=>{
       setNewsList(res.body);
     });
   },[]);
+  //路由跳转
+  let navigate = useNavigate();
   return (
     <div className="home">
-      {/* 轮播图 */}
-      <Swiper autoplay={true} loop={true}>{
-        swiperList.map((item)=>(
-          <Swiper.Item key={item.id}>
-           <Image height={212} src={`http://localhost:8080${item.imgSrc}`} fit='fill' />
-          </Swiper.Item>
-        ))
-      }
-      </Swiper>
+      <div className='home-top'>
+          {/* 轮播图 */}
+          <Swiper autoplay={true} loop={true}>{
+            swiperList.map((item)=>(
+              <Swiper.Item key={item.id}>
+               <Image height={212} src={`http://localhost:8080${item.imgSrc}`} fit='fill' />
+              </Swiper.Item>
+            ))
+          }
+          </Swiper>
+          {/*收索框 顶部 */}
+          <div className='search-box'>
+            <div className='search'>
+              {/* 位置 */}
+              <div className="location" onClick={()=>navigate('/citylist')}>
+                <span className="name">上海</span>
+                <i className="iconfont icon-arrow" />
+              </div>
+              {/* 搜索表单 */}
+              <div className="form" onClick={()=>navigate('/search')}>
+                <i className="iconfont icon-search" />
+                <span className="text">请输入小区或地址</span>
+              </div>
+            </div>
+            {/* 右侧地图图标 */}
+            <i className="iconfont icon-map" onClick={()=>navigate('/map')} />
+          </div>
+      </div>
+
       {/* 导航菜单 */}
       <Grid columns={4} className='nav'>{navsItem}</Grid>
       {/* 租房小组 */}
