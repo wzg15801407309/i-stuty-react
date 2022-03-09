@@ -6,6 +6,7 @@ const HouseList = lazy(() => import('../page/houseList'));
 const News = lazy(() => import('../page/news'));
 const Profile = lazy(() => import('../page/profile'));
 const CityList = lazy(() => import('../page/cityList'))
+const Maps = lazy(() => import('../page/map'))
 
 const routerArray = [
     {
@@ -21,7 +22,11 @@ const routerArray = [
     {
         path:'citylist',
         element: <CityList />
-    }
+    },
+    {
+        path:'map',
+        element: <Maps />
+    },
 ]
 
 export default routerArray;
