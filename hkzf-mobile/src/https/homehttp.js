@@ -11,7 +11,7 @@ const getSwiperList = () => {
 /**首页 租房小组 */
 const getHouseList = (params)=>{
   return new Promise((resolve,reject)=>{
-    http('get','/home/groups',{area:'AREA%7C88cff55c-aaa4-e2e0'}).then(res =>{
+    http('get','/home/groups',params).then(res =>{
       resolve(res);
     },error=>{console.log('网络错误～',error);reject(error);});
   });
@@ -19,13 +19,22 @@ const getHouseList = (params)=>{
 /**最新资讯 */
 const getNewsList = (params)=>{
   return new Promise((resolve,reject)=>{
-    http('get','/home/news',{area:'AREA%7C88cff55c-aaa4-e2e0'}).then(res =>{
+    http('get','/home/news',params).then(res =>{
       resolve(res);
     },error=>{console.log('网络错误～',error);reject(error);});
   });
 };
+/**根据 定位信息 获取房屋信息 */
+const getAreaInfo = (params)=>{
+  return new Promise((resolve,reject)=>{
+    http('get','/area/info',params).then(res=>{
+      resolve(res)
+    },error=>{console.log('网络错误～',error);reject(error);});
+  });
+}
 export {
   getSwiperList,
   getHouseList,
-  getNewsList
+  getNewsList,
+  getAreaInfo
 }

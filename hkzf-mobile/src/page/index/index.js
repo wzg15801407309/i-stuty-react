@@ -2,7 +2,7 @@ import React, {useEffect,useState}from 'react';
 import { Swiper, Image,Grid,List} from 'antd-mobile';
 import { Link,useNavigate } from "react-router-dom";
 import './index.less';
-import { getSwiperList,getHouseList,getNewsList } from '../../https/homehttp.js';
+import { getSwiperList,getHouseList,getNewsList,getAreaInfo } from '../../https/homehttp.js';
 
 // 导入导航菜单图片
 import Nav1 from '../../assets/images/nav-1.png'
@@ -32,15 +32,24 @@ const Index= ()=>{
   const [swiperList, setSwiperList] = useState([]);
   const [groupList, setGroupList] = useState([]);
   const [newsList, setNewsList] = useState([]);
+  const [currentCuty,setCurrentCity] = useState([]);
   useEffect(()=>{
     getSwiperList().then(res=>{
       setSwiperList(res.body);
     });
-    getHouseList().then(res=>{
+    getHouseList({area:'AREA%7C88cff55c-aaa4-e2e0'}).then(res=>{
       setGroupList(res.body);
     });
-    getNewsList().then(res=>{
+    getNewsList({area:'AREA%7C88cff55c-aaa4-e2e0'}).then(res=>{
       setNewsList(res.body);
+    });
+    // 获取到当前的定位信息
+    var myCity = new window.BMapGL.LocalCity();
+    myCity.get(res=>{
+      getAreaInfo({name:res.name}).then(result=>{
+        setCurrentCity(result.body.label);
+       console.log(result.body.label);
+      });
     });
   },[]);
   //路由跳转
@@ -62,7 +71,7 @@ const Index= ()=>{
             <div className='search'>
               {/* 位置 */}
               <div className="location" onClick={()=>navigate('/citylist')}>
-                <span className="name">上海</span>
+                <span className="name">{currentCuty}</span>
                 <i className="iconfont icon-arrow" />
               </div>
               {/* 搜索表单 */}
