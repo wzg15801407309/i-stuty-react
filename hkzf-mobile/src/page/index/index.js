@@ -48,7 +48,6 @@ const Index= ()=>{
     myCity.get(res=>{
       getAreaInfo({name:res.name}).then(result=>{
         setCurrentCity(result.body.label);
-       console.log(result.body.label);
       });
     });
   },[]);
