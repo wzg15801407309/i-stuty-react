@@ -1,6 +1,6 @@
 import React, { useEffect,useState }from 'react';
 import { NavBar,IndexBar, List } from 'antd-mobile';
-import { getCityList } from '../../https/cityhttp.js';
+import { getCityList,getHotCity } from '../../https/cityhttp.js';
 import { useNavigate } from 'react-router-dom'
 import './index.less';
 const CityList = () =>{
@@ -14,17 +14,22 @@ const CityList = () =>{
   const [cityKey, setCityKey] = useState([]);
   /** cityListObj {a:[{},{}]} */
   const [cityListObj, setCityListObj] = useState({});
-  useEffect(()=>{
-    console.log('00');
-    getCityList({level:1}).then(res=>{
-      const obj=handleData(res.body);
-      setCityKey(obj.tempkey);
-      setCityListObj(obj.tempobj)
-    })
+   useEffect(()=>{
+    getCityList({level:1}).then(res =>{
+      const listObj = handleData(res.body);
+      const keys = Object.keys(listObj).sort();
+      keys.unshift('hot');
+      setCityKey(keys);
+      getHotCity().then(hotres =>{
+        console.log(hotres);
+        listObj['hot'] = hotres.body;
+        setCityListObj(listObj);
+      });
+    });
   },[]);
   /**数据处理 */
   const handleData = (data)=>{
-    const tempobj = { };
+    const tempobj = {};
     data.forEach(item => {
       const first = item.short.substr(0,1);
       if(tempobj[first]){
@@ -33,17 +38,13 @@ const CityList = () =>{
         tempobj[first] = [item];
       }
     });
-    const tempkey  = Object.keys(tempobj).sort();
-    return {
-      tempobj,
-      tempkey
-    }
+    return  tempobj
   }
   return <div className='citylist'> 
     <NavBar  backArrow={<i className="iconfont icon-back" />} onBack={goBackPage}>城市列表</NavBar>
     <div style={{ height: window.innerHeight }}>
       <IndexBar>
-        { cityKey.map(item => {
+        { cityKey&&cityKey.map(item => {
           const grous = cityListObj[item];
           return (
             <IndexBar.Panel index={item} title={`标题${item}`} key={`标题${item}`}>

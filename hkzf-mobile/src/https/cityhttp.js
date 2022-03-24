@@ -8,7 +8,15 @@ const getCityList = params => {
     },error =>{console.log('网络错误～',error);reject(error);});
   })
 };
-
+/**热门 城市 */
+const getHotCity = ()=>{
+  return new Promise((resolve,reject) => {
+    http('get','area/hot').then(res => {
+      resolve(res);
+    },error =>{console.log('网络错误～',error);reject(error);});
+  })
+}
 export {
-  getCityList
+  getCityList,
+  getHotCity
 }
