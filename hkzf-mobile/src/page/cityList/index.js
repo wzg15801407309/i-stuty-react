@@ -1,7 +1,8 @@
 import React, { useEffect,useState }from 'react';
 import { NavBar,IndexBar, List } from 'antd-mobile';
 import { getCityList,getHotCity } from '../../https/cityhttp.js';
-import { useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom';
+import { getCurrentCity } from '../../utils'
 import './index.less';
 const CityList = () =>{
   const history = useNavigate();
@@ -15,17 +16,31 @@ const CityList = () =>{
   /** cityListObj {a:[{},{}]} */
   const [cityListObj, setCityListObj] = useState({});
    useEffect(()=>{
-    getCityList({level:1}).then(res =>{
-      const listObj = handleData(res.body);
+    // 优化
+    Promise.all([getCityList({level:1}),getHotCity(),getCurrentCity()]).then(values=>{
+      console.log('Promiseall',values);
+      const listObj = handleData(values[0].body);
       const keys = Object.keys(listObj).sort();
-      keys.unshift('hot');
+      listObj['hot'] = values[1].body;
+      keys.unshift('hot'); 
+      setCityListObj(listObj);
       setCityKey(keys);
-      getHotCity().then(hotres =>{
-        console.log(hotres);
-        listObj['hot'] = hotres.body;
-        setCityListObj(listObj);
-      });
+      console.log(keys);
     });
+    // old 
+    // getCityList({level:1}).then(res =>{
+    //   const listObj = handleData(res.body);
+    //   const keys = Object.keys(listObj).sort();
+    //   keys.unshift('hot');
+    //   setCityKey(keys);
+    //   getHotCity().then(hotres =>{
+    //     listObj['hot'] = hotres.body;
+    //     setCityListObj(listObj);
+    //     getCurrentCity().then(res=>{
+    //       listObj['#'] = res;
+    //     });
+    //   });
+    // });
   },[]);
   /**数据处理 */
   const handleData = (data)=>{
@@ -47,7 +62,7 @@ const CityList = () =>{
         { cityKey&&cityKey.map(item => {
           const grous = cityListObj[item];
           return (
-            <IndexBar.Panel index={item} title={`标题${item}`} key={`标题${item}`}>
+            <IndexBar.Panel index={item} title={`${item}`} key={`标题${item}`}>
               <List>
                 {grous && grous.map((item, index) => (
                   <List.Item key={index}>{item.label}</List.Item>
