@@ -1,9 +1,28 @@
 import React, { useEffect,useState }from 'react';
-import { NavBar,IndexBar, List } from 'antd-mobile';
+import { NavBar } from 'antd-mobile';
+// 导入 List 组件
+import { List, AutoSizer } from 'react-virtualized';
 import { getCityList,getHotCity } from '../../https/cityhttp.js';
 import { useNavigate } from 'react-router-dom';
 import { getCurrentCity } from '../../utils'
 import './index.less';
+// 索引（A、B等）的高度
+const TITLE_HEIGHT = 36
+// 每个城市名称的高度
+const NAME_HEIGHT = 50
+/**封装处理字母索引的方法 */
+const formatCityIndex = letter => {
+  if(letter){
+    switch (letter) {
+      case '#':
+        return '当前定位'
+      case 'hot':
+        return '热门城市'
+      default:
+        return letter.toUpperCase()
+    }
+  }
+}
 const CityList = () =>{
   const history = useNavigate();
   const goBackPage = ()=>{
@@ -15,36 +34,29 @@ const CityList = () =>{
   const [cityKey, setCityKey] = useState([]);
   /** cityListObj {a:[{},{}]} */
   const [cityListObj, setCityListObj] = useState({});
-  const [curCityObj, setCurCityObj] = useState({});
+  /**当前城市 */
+  // const [curCityObj, setCurCityObj] = useState({});
+  const [isLoading, setIsLoading] = useState(false);
+  const [activeIndex, setActiveIndex] = useState(0);
   /**当前城市 */
    useEffect(()=>{
+    setIsLoading(true);
     // 优化
     Promise.all([getCityList({level:1}),getHotCity(),getCurrentCity()]).then(values=>{
       console.log('Promiseall',values);
       const listObj = handleData(values[0].body);
       const keys = Object.keys(listObj).sort();
       listObj['hot'] = values[1].body;
-      const curCity = values[2];
-      console.log(curCity)
+      const curCity =[ values[2]];
+      listObj['#'] = curCity;
       keys.unshift('hot'); 
+      keys.unshift('#'); 
       setCityListObj(listObj);
       setCityKey(keys);
-      setCurCityObj(curCity);
+      // setCurCityObj(curCity);
+      setIsLoading(false)
     });
-    // old 
-    // getCityList({level:1}).then(res =>{
-    //   const listObj = handleData(res.body);
-    //   const keys = Object.keys(listObj).sort();
-    //   keys.unshift('hot');
-    //   setCityKey(keys);
-    //   getHotCity().then(hotres =>{
-    //     listObj['hot'] = hotres.body;
-    //     setCityListObj(listObj);
-    //     getCurrentCity().then(res=>{
-    //       listObj['#'] = res;
-    //     });
-    //   });
-    // });
+  
   },[]);
   /**数据处理 */
   const handleData = (data)=>{
@@ -59,27 +71,57 @@ const CityList = () =>{
     });
     return  tempobj
   }
-  return <div className='citylist'> 
-    <NavBar  backArrow={<i className="iconfont icon-back" />} onBack={goBackPage}>城市列表</NavBar>
-    {/* <div>{curCityObj.label}</div> */}
-    <div style={{ height: window.innerHeight }}>
-      <IndexBar>
-        { cityKey&&cityKey.map(item => {
-          const grous = cityListObj[item];
-          return (
-            <IndexBar.Panel index={item} title={`${item}`} key={`标题${item}`}>
-              <List>
-                {grous && grous.map((item, index) => (
-                  <List.Item key={index}>{item.label}</List.Item>
-                ))}
-              </List>
-            </IndexBar.Panel>
-          )
-        })}
-      </IndexBar>
-    </div>
 
-  </div>
+  /**
+   * List组件渲染每一行的方法
+   * @param {*} param0 
+   * isScrolling： 当前项是否正在滚动中
+   * isVisible:当前项在 List 中是可见的
+   * style :注意：重点属性，一定要给每一个行数据添加该样式！作用：指定每一行的位置
+   * @returns 
+   */
+  const rowRenderer = ({ key, index, isScrolling,isVisible,style}) => {
+    // 获取每一行的字母索引
+    const letter = cityKey[index];
+    return (
+      <div key={key} style={style} className="citycontent">
+        <div className="title">{formatCityIndex(letter)}</div>
+        { cityListObj[letter] && cityListObj[letter].map(item => (
+          <div className="name" key={item.value}>
+            {item.label}
+          </div>
+        ))}
+      </div>
+      )
+  }
+    // 创建动态计算每一行高度的方法
+  const getRowHeight = ({ index }) => {
+    // 索引标题高度 + 城市数量 * 城市名称的高度
+    // TITLE_HEIGHT + cityListObj[cityKey[index]].length * NAME_HEIGHT
+    return TITLE_HEIGHT + cityListObj[cityKey[index]].length * NAME_HEIGHT;
+  }
+  /**右侧列表渲染 */
+  const renderCityIndex = ()=>{
+    return cityKey.map((item,index) => (
+      <li className="city-index-item" key={item}>
+        <span className={activeIndex === index ? 'index-active' : ''}>
+          {item === 'hot' ? '热' : item.toUpperCase()}
+        </span>
+      </li>
+    ))
+  };
+  return (<div className='citylist'> 
+    <NavBar  backArrow={<i className="iconfont icon-back" />} onBack={goBackPage}>城市列表</NavBar>
+    {/* 城市列表 */}
+    {isLoading ? ( <div>Loading ...</div>):(
+        <AutoSizer>
+          {({ width, height }) => (
+            <List width={width} height={height} rowCount={cityKey.length} rowHeight={getRowHeight} rowRenderer={rowRenderer}/>
+          )}
+        </AutoSizer>
+    )}
+    <ul className="city-index">{renderCityIndex()}</ul>
+  </div>)
 }
 
 export default CityList;
