@@ -15,6 +15,8 @@ const CityList = () =>{
   const [cityKey, setCityKey] = useState([]);
   /** cityListObj {a:[{},{}]} */
   const [cityListObj, setCityListObj] = useState({});
+  const [curCityObj, setCurCityObj] = useState({});
+  /**当前城市 */
    useEffect(()=>{
     // 优化
     Promise.all([getCityList({level:1}),getHotCity(),getCurrentCity()]).then(values=>{
@@ -22,10 +24,12 @@ const CityList = () =>{
       const listObj = handleData(values[0].body);
       const keys = Object.keys(listObj).sort();
       listObj['hot'] = values[1].body;
+      const curCity = values[2];
+      console.log(curCity)
       keys.unshift('hot'); 
       setCityListObj(listObj);
       setCityKey(keys);
-      console.log(keys);
+      setCurCityObj(curCity);
     });
     // old 
     // getCityList({level:1}).then(res =>{
@@ -57,6 +61,7 @@ const CityList = () =>{
   }
   return <div className='citylist'> 
     <NavBar  backArrow={<i className="iconfont icon-back" />} onBack={goBackPage}>城市列表</NavBar>
+    {/* <div>{curCityObj.label}</div> */}
     <div style={{ height: window.innerHeight }}>
       <IndexBar>
         { cityKey&&cityKey.map(item => {
