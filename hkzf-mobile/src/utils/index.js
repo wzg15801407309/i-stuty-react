@@ -1,6 +1,5 @@
 import { getAreaInfo } from '../https/homehttp.js';
 export const getCurrentCity = ()=>{
-  localStorage.clear();
   const localCity = JSON.parse(localStorage.getItem('hkzf_city'));
   if(!localCity){
     return new Promise((resolve,reject)=>{
