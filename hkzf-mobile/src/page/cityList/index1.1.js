@@ -84,3 +84,15 @@ const CityList = () =>{
 }
 
 export default CityList;
+
+/** 非常重要的知识点
+ * 组件样式覆盖问题
+ * 解决办法：css moudule / webpack css-loder /react支持
+ * 创建的规则：
+ * 1、命名：[name].moudule.css 的样式文件（React脚手架中的约定与普通的做区分）
+ * 2、导入：import styles from '[name].moudule.css'
+ * 3、使用：<div className={styles.[class名字]}></div> 
+ * 4、最后生成的class: [组件名]_[name]_[随机]
+ * 注意：1、不推荐使用嵌套的样式、
+ *      2、如果是全局样式(前端框架的样式：Ant Design Mobile)，需要如下 :global(.an-navbar-title){} || .root :global(.an-navbar-title){}
+ */

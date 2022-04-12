@@ -1,11 +1,12 @@
 import React, { useEffect,useState,useRef }from 'react';
-import { NavBar,Toast } from 'antd-mobile';
+import { Toast } from 'antd-mobile';
 // 导入 List 组件
 import { List, AutoSizer } from 'react-virtualized';
 import { getCityList,getHotCity } from '../../https/cityhttp.js';
 import { useNavigate } from 'react-router-dom';
 import { getCurrentCity } from '../../utils'
 import './index.less';
+import NavHeader from '../../commponents/navheader'
 // 索引（A、B等）的高度
 const TITLE_HEIGHT = 36;
 // 每个城市名称的高度
@@ -28,9 +29,7 @@ const formatCityIndex = letter => {
 const CityList = () =>{
   const history = useNavigate();
   const goBackPage = ()=>{
-    // 返回上一级菜单
     history(-1);
-    // window.history.back(); 这个也可以实现
   }
   const cityRef = useRef(null);
   /** cityKey []*/
@@ -134,7 +133,7 @@ const CityList = () =>{
     }
   };
   return (<div className='citylist'> 
-    <NavBar  backArrow={<i className="iconfont icon-back" />} onBack={goBackPage}>城市列表</NavBar>
+    <NavHeader>城市列表</NavHeader>
     {/* 城市列表 */}
     {isLoading ? ( <div>Loading ...</div>):(
         <AutoSizer>
