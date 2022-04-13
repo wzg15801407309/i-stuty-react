@@ -130,6 +130,8 @@ body {
   font-family: 'Microsoft YaHei';
   color: #333;
   background-color: #fff;
+  overflow:scroll;
+  overflow-y:hidden;
 }
 
 * {

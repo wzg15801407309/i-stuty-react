@@ -36,8 +36,6 @@ const CityList = () =>{
   const [cityKey, setCityKey] = useState([]);
   /** cityListObj {a:[{},{}]} */
   const [cityListObj, setCityListObj] = useState({});
-  /**当前城市 */
-  // const [curCityObj, setCurCityObj] = useState({});
   const [isLoading, setIsLoading] = useState(false);
   const [activeIndex, setActiveIndex] = useState(0);
   /**当前城市 */
@@ -55,9 +53,7 @@ const CityList = () =>{
       keys.unshift('#'); 
       setCityListObj(listObj);
       setCityKey(keys);
-      // setCurCityObj(curCity);
       setIsLoading(false)
-      console.log('useEffect*************');
       cityRef.current.measureAllRows();
     });
   },[]);
