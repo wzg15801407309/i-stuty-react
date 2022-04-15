@@ -11,7 +11,7 @@ const NavHeader = ({children,onLeftClick})=>{
     history(-1);
     // window.history.back(); 这个也可以实现
   }
-  return <NavBar  className={styles.NavBar} backArrow={<i className="iconfont icon-back" />} onBack={ onLeftClick || defaultGoBackPage}>
+  return <NavBar  className={styles.navBar} backArrow={<i className="iconfont icon-back" />} onBack={ onLeftClick || defaultGoBackPage}>
       {children}
     </NavBar>
 }
