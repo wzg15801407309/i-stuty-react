@@ -147,15 +147,23 @@ module.exports = function (webpackEnv) {
                     },
                   ],
                   [
-                    'postcss-px-to-viewport',
+                    'postcss-px-to-viewport', 
                     {
-                      viewportWidth: 750, // (Number) The width of the viewport.
-                      viewportHeight: 1334, // (Number) The height of the viewport. -- 一般不需要配置
-                      unitPrecision: 3, // (Number) The decimal numbers to allow the REM units to grow to.
-                      viewportUnit: "vw", // (String) Expected units.
-                      selectorBlackList: [], // (Array) The selectors to ignore and leave as px.
-                      minPixelValue: 1, // (Number) Set the minimum pixel value to replace.
-                      mediaQuery: false // (Boolean) Allow px to be converted in media queries.
+                        unitToConvert: 'px',
+                        viewportWidth: 375,
+                        unitPrecision: 5,
+                        propList: ['*'],
+                        viewportUnit: 'vw',
+                        fontViewportUnit: 'vw',
+                        selectorBlackList: [],
+                        minPixelValue: 1,
+                        mediaQuery: false,
+                        replace: true,
+                        exclude: undefined,
+                        include: undefined,
+                        landscape: false,
+                        landscapeUnit: 'vw',
+                        landscapeWidth: 568
                     }
                   ],
                   // Adds PostCSS Normalize as the reset css with default options,
