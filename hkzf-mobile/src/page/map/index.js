@@ -1,7 +1,16 @@
 import React,{ useEffect,useState } from 'react';
-import {Map, Marker, NavigationControl,ZoomControl,ScaleControl} from 'react-bmapgl';
+import {Map, Marker, NavigationControl,ZoomControl,ScaleControl,CustomOverlay} from 'react-bmapgl';
 import './index.less';
 import NavHeader from '../../commponents/navheader';
+const DOtMsg = ()=>{
+  return (
+    <div className='rect' >
+      <span className='housename'>上海</span>
+      <span className='housenum'>50套</span>
+      <i className='arrow'></i>
+    </div>
+  )
+}
 const Maps = ()=>{
   const {label,value} = JSON.parse(localStorage.getItem('hkzf_city'));
   const [point, setPoint] = useState({});
@@ -23,10 +32,15 @@ const Maps = ()=>{
     <div className='maps'>
       <NavHeader>地图找房</NavHeader>
       <Map style={{ height: '100%' }}   center={new window.BMapGL.Point(point.lng,point.lat)}  zoom="11">
-        <Marker position={point} />
+       
         <ZoomControl />
         <ScaleControl />
         <NavigationControl /> 
+
+        {/* 自定义覆盖物 */}
+        <CustomOverlay position={new window.BMapGL.Point(point.lng,point.lat)}>
+          123 
+        </CustomOverlay>
       </Map>
     </div>
   )
