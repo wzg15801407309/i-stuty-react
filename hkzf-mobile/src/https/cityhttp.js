@@ -16,7 +16,23 @@ const getHotCity = ()=>{
     },error =>{console.log('网络错误～',error);reject(error);});
   })
 }
+/**获取城市房源信息 、区、镇信息 */
+// const getHouseCityMsg = (params)=>{
+//   return new Promise((resolve,reject) => {
+//     http('get','/area/community',params).then(res => {
+//       resolve(res);
+//     },error =>{console.log('网络错误～',error);reject(error);});
+//   })
+// }
+const getHouseCityMsg = (params)=>{
+  return new Promise((resolve,reject) => {
+    http('get','/area/map',params).then(res => {
+      resolve(res);
+    },error =>{console.log('网络错误～',error);reject(error);});
+  })
+}
 export {
   getCityList,
-  getHotCity
+  getHotCity,
+  getHouseCityMsg
 }
