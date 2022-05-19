@@ -14,7 +14,7 @@ export const getCurrentCity = ()=>{
         }catch(e){
           reject(e);
         }
-      });
+      }); 
     })
   }
   return Promise.resolve(localCity);
