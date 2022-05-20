@@ -55,6 +55,7 @@ const Maps = ()=>{
     const { coord: {latitude, longitude},label:areaName,count,value} = data;
     /**创建坐标对象 */
     const areaPoint = new BMapGL.Point(longitude,latitude);
+    console.log(type,zoom);
     if(type === 'circle' ){// 区 和镇创建
       createCircle(areaPoint,areaName,count,value,zoom);
     }else{// 小区创建
@@ -123,17 +124,16 @@ const Maps = ()=>{
   const getTypeAndZoom = () => {
     // 调用地图的 getZoom()方法，来获取当前缩放级别
     const zoom = mapInitObj.getZoom();
-    let nextZoom, type
+    let nextZoom, type;
     if (zoom >= 10 && zoom < 12) {
-      // 区
-      // 下一个缩放级别
+      // 区 下一个缩放级别
       nextZoom = 13
       // circle 表示绘制圆形覆盖物（区、镇）
       type = 'circle';
     } else if (zoom >= 12 && zoom < 14) {
       // 镇
       nextZoom = 15
-      type = 'circle';
+      type = 'rect';
     } else if (zoom >= 14 && zoom < 16) {
       // 小区
       type = 'rect';
