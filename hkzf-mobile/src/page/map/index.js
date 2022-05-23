@@ -1,7 +1,8 @@
-import React,{ useEffect } from 'react';
+import React,{ useEffect,useState } from 'react';
 import './index.less';
 import NavHeader from '../../commponents/navheader';
-import { getHouseCityMsg } from '../../https/cityhttp.js';
+import DetailsList from './detailslist';
+import { getHouseCityMsg,getcommunityCityMsg } from '../../https/cityhttp.js';
 const BMapGL = window.BMapGL;
 // 覆盖物样式
 const labelStyle = {
@@ -16,6 +17,7 @@ const labelStyle = {
 }
 const Maps = ()=>{
   let mapInitObj;
+  const [isShowList, setIsShowList] = useState(false);
   useEffect(()=>{initMap();},[]);
   const initMap = ()=>{
     // 获取当前的定位
@@ -108,11 +110,20 @@ const Maps = ()=>{
 
       // 添加单击事件
       label.addEventListener('click', e => {
+        setIsShowList(true);
         // this.getHousesList(id)
         console.log('.......显示具体的房源信息');
+        getCommunityListings(id);
       })
     // 添加覆盖物到地图中
     mapInitObj.addOverlay(label);
+  };
+  /**获取小区的房源列表 */
+  const getCommunityListings = id =>{
+    getcommunityCityMsg({cityId:id}).then(res=>{
+      console.log('getCommunityListings',res);
+      
+    })
   }
   /**
    * 计算要绘制的覆盖物类型和下一个缩放级别
@@ -146,7 +157,10 @@ const Maps = ()=>{
       {/* 地图找房 */}
       {/* 地图容器元素 */}
       <div id="container" className="container" />
+      {/* 房源列表 */}
+      <DetailsList  isShowList={isShowList}/>
     </div>
   )
+
 }
 export default Maps;
