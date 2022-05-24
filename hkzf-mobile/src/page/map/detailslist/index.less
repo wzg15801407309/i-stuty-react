@@ -11,6 +11,7 @@
   .titleWrap {
     display: flex;
     justify-content: space-between;
+    align-items: center;
     width: 100%;
     background: #c0c0c2;
     border-top: 1px solid #c8c8c8;
@@ -18,15 +19,54 @@
     padding: 0 15px;
     font-size: 16px;
     color: #1e1e1e;
-    .listTitle {
-      // display: inline-block;
-      // padding-left: 10px;
-      // line-height: 43px;
-      // font-size: 16px;
-      // color: #1e1e1e;
-      // vertical-align: middle;
+  }
+  .titleMore {
+    line-height: 43px;
+    font-size: 13px;
+    color: #1e1e1e;
+    text-decoration:none
+  }
+  .houseItems{
+    padding: 0 15px;
+    height: 100%;
+    overflow-y: auto;
+    padding-bottom: 45px;
+    .adm-list-item{
+      padding-left: 0px;
+      .adm-list-item-content {
+        padding-right: 0px;
+      }
+      .adm-list-item-content-main {
+        width: 100%; 
+        display: flex;
+        padding: 10px 0;
+        .item-left{
+          width: 106px;
+          margin-right: 10px;
+        }
+        .item-right{
+          flex: 1;
+          .title{
+            margin: 0;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            vertical-align: middle;
+            font-size: 15px;
+            color: #394043;
+          }
+          .desc {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            vertical-align: middle;
+            font-size: 12px;
+            color: #afb2b3;
+          }
+
+        }
+      }
     }
-    
   }
 }
 .show{

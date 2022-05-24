@@ -18,6 +18,7 @@ const labelStyle = {
 const Maps = ()=>{
   let mapInitObj;
   const [isShowList, setIsShowList] = useState(false);
+  const [upObj, setUpObj] = useState({});
   useEffect(()=>{initMap();},[]);
   const initMap = ()=>{
     // 获取当前的定位
@@ -57,7 +58,6 @@ const Maps = ()=>{
     const { coord: {latitude, longitude},label:areaName,count,value} = data;
     /**创建坐标对象 */
     const areaPoint = new BMapGL.Point(longitude,latitude);
-    console.log(type,zoom);
     if(type === 'circle' ){// 区 和镇创建
       createCircle(areaPoint,areaName,count,value,zoom);
     }else{// 小区创建
@@ -121,8 +121,8 @@ const Maps = ()=>{
   /**获取小区的房源列表 */
   const getCommunityListings = id =>{
     getcommunityCityMsg({cityId:id}).then(res=>{
-      console.log('getCommunityListings',res);
-      
+      setUpObj(res.body);
+      console.log(res.body);
     })
   }
   /**
@@ -158,7 +158,7 @@ const Maps = ()=>{
       {/* 地图容器元素 */}
       <div id="container" className="container" />
       {/* 房源列表 */}
-      <DetailsList  isShowList={isShowList}/>
+      <DetailsList  isShowList={isShowList} upObj = {upObj}/>
     </div>
   )
 
