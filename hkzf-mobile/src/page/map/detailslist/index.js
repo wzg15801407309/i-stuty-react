@@ -23,14 +23,14 @@ const DetailsList = (props)=>{
                   <div className="title">{item.title}</div>
                   <div className="desc">{item.desc}</div>
                   <div>
-                      {item.tags.map(tag => (
-                        <span className={["tag", "tag1"].join(' ')} key={tag}>{tag}</span>
+                      {item.tags.map((tag,index) => (
+                        <span className={["tag", `tag${index+1}`].join(' ')} key={tag}>{tag}</span>
                       ))}
                   </div>
                 </div>
                 <div className="price">
                     <span className="priceNum">{item.price}</span> 元/月
-                  </div>
+                </div>
               </div>
             </List.Item>
           ))
