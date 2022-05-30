@@ -122,7 +122,6 @@ const Maps = ()=>{
   const getCommunityListings = id =>{
     getcommunityCityMsg({cityId:id}).then(res=>{
       setUpObj(res.body);
-      console.log(res.body);
     })
   }
   /**

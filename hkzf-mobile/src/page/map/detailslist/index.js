@@ -19,8 +19,18 @@ const DetailsList = (props)=>{
               <Image  height={80} width={106} src={`http://localhost:8080${item.houseImg}`} fit={'fill'} />
               </div>
               <div className='item-right'>
-                <p className="title">{item.title}</p>
-                <div className="desc">{item.desc}</div>
+                <div className='right-up'>
+                  <div className="title">{item.title}</div>
+                  <div className="desc">{item.desc}</div>
+                  <div>
+                      {item.tags.map(tag => (
+                        <span className={["tag", "tag1"].join(' ')} key={tag}>{tag}</span>
+                      ))}
+                  </div>
+                </div>
+                <div className="price">
+                    <span className="priceNum">{item.price}</span> 元/月
+                  </div>
               </div>
             </List.Item>
           ))

@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>原生样式改造</title>
+</head>
+<style>
+    body {
+        background-color: #000100;
+        color: #fff;
+        display: flex;
+    }
+
+    .title {
+        padding: 10px 0;
+    }
+
+    .item {
+        padding: 10px 0;
+        display: flex;
+    }
+
+    .item-label {
+        font-size: 20px;
+        font-family: Microsoft YaHei;
+        font-weight: 400;
+        color: #fff;
+    }
+
+    .item-value {
+        font-size: 20px;
+        font-family: Microsoft YaHei;
+        color: #00FFFF;
+        margin-right: 20px;
+    }
+
+    .item-value input[type="checkbox"],
+    .item-value input[type="radio"] {
+        display: none;
+        /* 隐藏原生的多选框 */
+    }
+
+    .item-value input[type="checkbox"]+label>i,
+    .item-value input[type="radio"]+label>i {
+        /* 左侧选框的样式 */
+        position: relative;
+        display: inline-block;
+        width: 20px;
+        height: 20px;
+        border: 2px solid #00FFFF;
+        background: transparent;
+        margin-right: 10px;
+        vertical-align: middle;
+        border-radius: 3px;
+        top: -2px;
+        box-sizing: border-box;
+    }
+
+    .item-value input[type="radio"]+label>i {
+        border-radius: 50%;
+    }
+
+    .item-value input[type="checkbox"]+label,
+    .item-value input[type="radio"]+label {
+        /* hover样式 */
+        cursor: pointer;
+    }
+
+    .item-value input[type="checkbox"]:checked+label,
+    .item-value input[type="radio"]:checked+label {
+        /* 选中之后label的颜色 */
+        color: #FCDE11;
+    }
+
+    .item-value input[type="checkbox"]:checked+label>i {
+        /* 选中之后选框的样式 */
+        background: #FCDE11;
+        border: 2px solid #FCDE11;
+    }
+
+    .item-value input[type="radio"]:checked+label>i {
+        /* 选中之后选框的样式 */
+        border: 2px solid #FCDE11;
+    }
+
+    .item-value input[type="checkbox"]:checked+label>i::before {
+        /* 选中之后选框内对勾的样式 */
+        content: '';
+        position: absolute;
+        width: 6px;
+        height: 16px;
+        border-bottom: 3px solid #FFFFFF;
+        border-right: 3px solid #FFFFFF;
+        left: 50%;
+        top: 20%;
+        transform-origin: center;
+        transform: translate(-50%, -30%) rotate(40deg);
+        -webkit-transform: translate(-50%, -30%) rotate(40deg);
+    }
+
+    .item-value input[type="radio"]:checked+label>i::before {
+        /* 选中之后选框内圆点的样式 */
+        width: 10px;
+        height: 10px;
+        content: '';
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        margin: auto;
+        background: #FCDE11;
+        border-radius: 50%;
+    }
+</style>
+
+<body>
+    <div>
+        <h3>checkbox</h3>
+        <div class="title">原生</div>
+        <div class="item">
+            <label for="hei">
+                <input name="label3" id="hei" type="checkbox" value="3">
+                <span>无</span>
+            </label>
+            <label for="bai">
+                <input checked name="label4" id="bai" type="checkbox" value="4">
+                <span>有</span>
+            </label>
+        </div>
+
+        <div class="title">样式改造</div>
+        <div class="item">
+            <div class="item-label">选项：</div>
+            <div class="item-value">
+                <input id="ld" name="select" type="checkbox" checked>
+                <label for="ld"><i></i>雷达</label>
+            </div>
+            <div class="item-value">
+                <input id="wx" name="select" type="checkbox">
+                <label for="wx"><i></i>卫星</label>
+            </div>
+            <div class="item-value">
+                <input id="sb" name="select" type="checkbox">
+                <label for="sb"><i></i>色斑</label>
+            </div>
+        </div>
+    </div>
+
+    <div>
+        <h3>radio</h3>
+        <div class="title">原生</div>
+        <div class="item">
+            <label for="wu2">
+                <input name="label1" id="wu2" type="radio" value="11">
+                <span>无</span>
+            </label>
+            <label for="you2">
+                <input checked name="label2" id="you2" type="radio" value="22">
+                <span>有</span>
+            </label>
+        </div>
+
+        <div class="title">样式改造</div>
+        <div class="item">
+            <div class="item-label">选项：</div>
+            <div class="item-value">
+                <input id="ld2" name="select" type="radio" checked>
+                <label for="ld2"><i></i>雷达</label>
+            </div>
+            <div class="item-value">
+                <input id="wx2" name="select" type="radio">
+                <label for="wx2"><i></i>卫星</label>
+            </div>
+            <div class="item-value">
+                <input id="sb2" name="select" type="radio">
+                <label for="sb2"><i></i>色斑</label>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
