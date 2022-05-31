@@ -45,6 +45,7 @@ const Maps = ()=>{
     },label);
     // 给地图绑定移动事件
     mapInitObj.addEventListener('dragstart', () => {
+      console.log('dragstart',isShowList);
       if(isShowList){
         setIsShowList(false);
       }
@@ -103,7 +104,7 @@ const Maps = ()=>{
       });
       // 给 label 对象添加一个唯一标识
       label.id = id;
-          // 设置房源覆盖物内容
+      // 设置房源覆盖物内容
       label.setContent(`
         <div class="rect">
           <span class="housename">${name}</span>
