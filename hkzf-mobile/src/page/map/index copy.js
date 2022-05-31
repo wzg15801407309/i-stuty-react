@@ -43,18 +43,13 @@ const Maps = ()=>{
         alert('您选择的地址没有解析到结果！');
       }
     },label);
-    // 给地图绑定移动事件
-    mapInitObj.addEventListener('dragstart', () => {
-      if(isShowList){
-        setIsShowList(false);
-      }
-    })
   }
   const renderOverlays  = (key)=>{
     const {nextZoom, type} = getTypeAndZoom();
     getHouseCityMsg({id:key}).then(res=>{
       const list = res.body;
       list.forEach(element => {
+        console.log(nextZoom,type);
         createOverlays(element,nextZoom,type);
       });
     })
@@ -86,10 +81,10 @@ const Maps = ()=>{
     // 设置样式
     label.setStyle(labelStyle);
     label.addEventListener('click', () => {
-      // 放大地图，以当前点击的覆盖物为中心放大地图
-      mapInitObj.centerAndZoom(point, zoom)
       // 调用 renderOverlays 方法，获取该区域下的房源数据
       renderOverlays(id)
+      // 放大地图，以当前点击的覆盖物为中心放大地图
+      mapInitObj.centerAndZoom(point, zoom)
       // 清除当前覆盖物信息
       mapInitObj.clearOverlays()
     })
@@ -121,6 +116,7 @@ const Maps = ()=>{
         getCommunityListings(id);
         const target = e.domEvent.changedTouches[0];
         mapInitObj.panBy(window.innerWidth/2-target.clientX,(window.innerHeight-330)/2-target.clientY);
+        console.log(target);
       })
     // 添加覆盖物到地图中
     mapInitObj.addOverlay(label);
@@ -144,14 +140,14 @@ const Maps = ()=>{
     let nextZoom, type;
     if (zoom >= 10 && zoom < 12) {
       // 区 下一个缩放级别
-      nextZoom = 14
+      nextZoom = 13
       // circle 表示绘制圆形覆盖物（区、镇）
       type = 'circle';
-    } else if (zoom >= 12 && zoom < 15) {
+    } else if (zoom >= 12 && zoom < 14) {
       // 镇
-      nextZoom = 16
+      nextZoom = 18
       type = 'rect';
-    } else if (zoom >= 15 && zoom < 19) {
+    } else if (zoom >= 14 && zoom < 19) {
       // 小区
       type = 'rect';
     }
