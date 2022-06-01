@@ -5,6 +5,7 @@ import { List, Image } from 'antd-mobile';
 import './index.less';
 const DetailsList = (props)=>{
  const { isShowList,upObj } = props;
+ console.log(isShowList);
   return (
     <div className={["detailslist",isShowList?'show':""].join(' ')}>
       <div className="titleWrap">

@@ -2,6 +2,9 @@ import React,{ useEffect,useState } from 'react';
 import './index.less';
 import NavHeader from '../../commponents/navheader';
 import DetailsList from './detailslist';
+import {Toast } from 'antd-mobile';
+import { UploadOutline } from 'antd-mobile-icons'
+
 import { getHouseCityMsg,getcommunityCityMsg } from '../../https/cityhttp.js';
 const BMapGL = window.BMapGL;
 // 覆盖物样式
@@ -44,17 +47,24 @@ const Maps = ()=>{
       }
     },label);
     // 给地图绑定移动事件
-    mapInitObj.addEventListener('dragstart', () => {
+    myMap.addEventListener('dragstart', () => {
       console.log('dragstart',isShowList);
-      if(isShowList){
+      if(isShowList){//不起作用
         setIsShowList(false);
       }
     })
   }
   const renderOverlays  = (key)=>{
     const {nextZoom, type} = getTypeAndZoom();
+    Toast.show({
+      icon: 'loading',
+      content: '加载中…',
+      duration: 0,
+      position: 'center',
+    })
     getHouseCityMsg({id:key}).then(res=>{
       const list = res.body;
+      Toast.clear();
       list.forEach(element => {
         createOverlays(element,nextZoom,type);
       });
@@ -77,7 +87,6 @@ const Maps = ()=>{
       position:point,
       offset:new BMapGL.Size(-35,-35)
     });
-    label.id = id;
     label.setContent(`
       <div class="bubble">
         <p class='name'>${name}</p>
@@ -102,8 +111,6 @@ const Maps = ()=>{
         position: point,
         offset: new BMapGL.Size(-50, -28)
       });
-      // 给 label 对象添加一个唯一标识
-      label.id = id;
       // 设置房源覆盖物内容
       label.setContent(`
         <div class="rect">
@@ -118,7 +125,7 @@ const Maps = ()=>{
       // 添加单击事件
       label.addEventListener('click', e => {
         console.log('.......显示具体的房源信息');
-        setIsShowList(true);
+        
         getCommunityListings(id);
         const target = e.domEvent.changedTouches[0];
         mapInitObj.panBy(window.innerWidth/2-target.clientX,(window.innerHeight-330)/2-target.clientY);
@@ -128,8 +135,16 @@ const Maps = ()=>{
   };
   /**获取小区的房源列表 */
   const getCommunityListings = id =>{
+    Toast.show({
+      icon: 'loading',
+      content: '加载中…',
+      duration: 0,
+      position: 'center',
+    })
     getcommunityCityMsg({cityId:id}).then(res=>{
+      Toast.clear();
       setUpObj(res.body);
+      setIsShowList(true);
     })
   }
   /**
